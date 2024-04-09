@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stopwatch</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <h1 style="text-align:center">Stopwatch</h1>
+  <h1 style="text-align:center;">
+    <span style="font-size:200px" id="display1">00</span>
+    <span style="font-size:100px" id="display2">.0</span>
+  </h1>
+  <div style="text-align:center">
+    <button id="start" style="text-align:center;font-size:100px">Reset and Start</button>
+  </div>
+  <script>
+    let display1 = $('#display1');
+    let display2 = $('#display2');
+    let count = 0;
+    function setText() {
+      count += 1;
+      text = (count/10.0).toFixed(1).toString().padStart(4, '0');
+      display1.text(text.substring(0, text.length-2));
+      display2.text(text.substring(text.length-2));
+    }
+
+    let intervalId = null;
+    function resetAndStart() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        count = -1;
+      }
+      intervalId = setInterval(setText, 100);
+    }
+
+    $('#start').click(resetAndStart)
+    $(document.body).on('keypress', (e) => {
+      if (e.which === 32) {
+        resetAndStart();
+      }
+    })
+  </script>
+</body>
+
+</html>
